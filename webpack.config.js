@@ -1,12 +1,14 @@
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
 
+
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const isProduction = process.env.NODE_ENV == "production";
 
 const config = {
-  entry: "./src/main.js",
+  entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, "dist"),
   },
@@ -18,7 +20,11 @@ const config = {
     new HtmlWebpackPlugin({
       template: "index.html",
     }),
-
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'src/assets/',to:'assets/'},
+      ],
+    }),
     // Add your plugins here
     // Learn more about plugins from https://webpack.js.org/configuration/plugins/
   ],
@@ -29,8 +35,8 @@ const config = {
         loader: "babel-loader",
       },
       {
-        test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
-        type: "asset",
+        test: /\.png/,
+        type: 'asset/resource',
       },
 
       // Add your rules for custom modules here
